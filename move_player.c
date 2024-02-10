@@ -112,57 +112,36 @@ void move_player_down(v_player *player)
     }
 }
 
-void walking_player(v_player *player, void *mlx_ptr, void *mlx_win, int x, int y)
+void get_animation_images(v_player *player)
 {
-    t_data      img;
-    void        *images[8];
     int         img_width;
     int         img_height;
-    static int  j;
 
-    images[0] = mlx_xpm_file_to_image(mlx_ptr, "./assets/walk/Walk 1.xpm", &img_width, &img_height);
-    images[1] = mlx_xpm_file_to_image(mlx_ptr, "./assets/walk/Walk 2.xpm", &img_width, &img_height);
-    images[2] = mlx_xpm_file_to_image(mlx_ptr, "./assets/walk/Walk 3.xpm", &img_width, &img_height);
-    images[3] = mlx_xpm_file_to_image(mlx_ptr, "./assets/walk/Walk 4.xpm", &img_width, &img_height);
-    images[4] = mlx_xpm_file_to_image(mlx_ptr, "./assets/walk/Walk 5.xpm", &img_width, &img_height);
-    images[5] = mlx_xpm_file_to_image(mlx_ptr, "./assets/walk/Walk 6.xpm", &img_width, &img_height);
-    images[6] = mlx_xpm_file_to_image(mlx_ptr, "./assets/walk/Walk 7.xpm", &img_width, &img_height);
-    images[7] = mlx_xpm_file_to_image(mlx_ptr, "./assets/walk/Walk 8.xpm", &img_width, &img_height);
+    player->animations[0] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 1.xpm", &img_width, &img_height);
+    player->animations[1] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 2.xpm", &img_width, &img_height);
+    player->animations[2] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 3.xpm", &img_width, &img_height);
+    player->animations[3] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 4.xpm", &img_width, &img_height);
+    player->animations[4] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 5.xpm", &img_width, &img_height);
+    player->animations[5] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 6.xpm", &img_width, &img_height);
+    player->animations[6] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 7.xpm", &img_width, &img_height);
+    player->animations[7] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 8.xpm", &img_width, &img_height);
+    walking_animation(player);
+}
+
+void    walking_animation(v_player *player)
+{
+    int  j;
+    int  i;
+
+    j = 0;
+    i = 0;
     while (j < 8)
     {
-        ft_printf("j -> %d\n", j);
-        img.img = images[j];
+        rendering_background(player->mlx_ptr, player->mlx_win, player->x * 50 , player->y * 50);
+        mlx_put_image_to_window(player->mlx_ptr, player->mlx_win, player->animations[j], player->x * 50, player->y * 50);
         j++;
-        if (player->keycode == 2)
-        {
-            rendering_background(player->mlx_ptr, player->mlx_win, player->x - 1, player->y);
-            mlx_put_image_to_window(mlx_ptr, mlx_win, img.img, (x - 1) * 50, y * 50);
-        }
-        else if (player->keycode == 0)
-        {
-            rendering_background(player->mlx_ptr, player->mlx_win, player->x + 1, player->y);
-            mlx_put_image_to_window(mlx_ptr, mlx_win, img.img, (x + 1) * 50, y * 50);
-        }
-        else if (player->keycode == 1)
-        {
-            rendering_background(player->mlx_ptr, player->mlx_win, player->x, player->y - 1);
-            mlx_put_image_to_window(mlx_ptr, mlx_win, img.img, x * 50, (y - 1) * 50);
-        }
-        else if (player->keycode == 13)
-        {
-            rendering_background(player->mlx_ptr, player->mlx_win, player->x , player->y + 1);    
-            mlx_put_image_to_window(mlx_ptr, mlx_win, img.img, x * 50, (y + 1) * 50);
-        }
+        while(i < 5000000)
+            i++;
+        i = 0;
     }
-    mlx_clear_window(mlx_ptr, mlx_win);
-    if (player->keycode == 2)
-        player->map[player->y][player->x - 1] = '0';
-    else if (player->keycode == 0)
-        player->map[player->y][player->x + 1] = '0';
-    else if (player->keycode == 1)
-        player->map[player->y - 1][player->x] = '0';
-    else if (player->keycode == 13)
-        player->map[player->y + 1][player->x] = '0';
-    player->map[player->y][player->x] = 'P';
-    j = 0;
 }

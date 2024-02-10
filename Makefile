@@ -1,6 +1,7 @@
 SRCS = so_long_main.c ./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c \
 	   parsing_map.c map_parsing_utils.c check_reachable.c rendering_images.c \
-	   find_player_position.c move_player.c reading_map.c render_background_all_map.c
+	   find_player_position.c move_player.c reading_map.c render_background_all_map.c \
+	   update_player_position.c
 OBJS = ${SRCS:.c=.o}
 FLAGS = -Wall -Werror -Wextra
 CC = cc
