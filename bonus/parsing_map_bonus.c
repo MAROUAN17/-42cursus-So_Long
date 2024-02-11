@@ -1,4 +1,4 @@
-#include "sl_header.h"
+#include "sl_header_bonus.h"
 
 void count_lines_rows(char *path, int *p_lines, int *p_rows)
 {
@@ -8,6 +8,7 @@ void count_lines_rows(char *path, int *p_lines, int *p_rows)
 
     fd = open(path, O_RDONLY);
     line = get_next_line(fd);
+    ft_printf("line -> %p\n", line);
     while (line)
     {
         index = 0;
@@ -112,6 +113,12 @@ int parsing_map(char *path, char **map, int height, int width)
         || check_walls(map, height, width) || check_collectible(map, width, height) 
         || check_exits(map, width, height) || check_start(map, width, height) 
         || check_reachable_collectibles(path, map, width, height) || check_reachable_exits(path, map, width, height))
+    {
+        ft_printf("check collectible -> %d\n", check_collectible(map, width, height));
+        ft_printf("check rectangular -> %d\n", check_rectangular_map(map, height, width));
+        ft_printf("check_reachable_collectible -> %d\n", check_reachable_collectibles(path, map, width, height));
+        ft_printf("check_reachable_exits -> %d\n", check_reachable_exits(path, map, width, height));
         check = 1;
+    }
     return (check);
 }

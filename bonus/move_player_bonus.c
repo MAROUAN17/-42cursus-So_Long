@@ -1,4 +1,4 @@
-#include "sl_header.h"
+#include "sl_header_bonus.h"
 
 void move_player_right(v_player *player)
 {
@@ -16,7 +16,6 @@ void move_player_right(v_player *player)
         else
         {
             player->moves++;
-            ft_printf("moves -> %d\n", player->moves);
             if (player->map[player->y][player->x + 1] == 'C')
             {
                 player->map[player->y][player->x + 1] = '0';   
@@ -43,7 +42,6 @@ void move_player_left(v_player *player)
         else
         {
             player->moves++;
-            ft_printf("moves -> %d\n", player->moves);
             if (player->map[player->y][player->x - 1] == 'C')
             {
                 player->map[player->y][player->x - 1] = '0'; 
@@ -70,7 +68,6 @@ void move_player_up(v_player *player)
         else
         {
             player->moves++;
-            ft_printf("moves -> %d\n", player->moves);
             if (player->map[player->y + 1][player->x] == 'C')
             {
                 player->map[player->y + 1][player->x] = '0';    
@@ -97,7 +94,6 @@ void move_player_down(v_player *player)
         else
         {
             player->moves++;
-            ft_printf("moves -> %d\n", player->moves);
             if (player->map[player->y - 1][player->x] == 'C')
             {
                 player->map[player->y - 1][player->x] = '0';
@@ -113,21 +109,21 @@ void get_animation_images(v_player *player)
     int         img_width;
     int         img_height;
 
-    player->animations[0] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 1.xpm", &img_width, &img_height);
-    player->animations[1] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 2.xpm", &img_width, &img_height);
-    player->animations[2] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 3.xpm", &img_width, &img_height);
-    player->animations[3] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 4.xpm", &img_width, &img_height);
-    player->animations[4] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 5.xpm", &img_width, &img_height);
-    player->animations[5] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 6.xpm", &img_width, &img_height);
-    player->animations[6] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 7.xpm", &img_width, &img_height);
-    player->animations[7] = mlx_xpm_file_to_image(player->mlx_ptr, "./assets/walk/Walk 8.xpm", &img_width, &img_height);
+    player->animations[0] = mlx_xpm_file_to_image(player->mlx_ptr, "../assets/walk/Walk 1.xpm", &img_width, &img_height);
+    player->animations[1] = mlx_xpm_file_to_image(player->mlx_ptr, "../assets/walk/Walk 2.xpm", &img_width, &img_height);
+    player->animations[2] = mlx_xpm_file_to_image(player->mlx_ptr, "../assets/walk/Walk 3.xpm", &img_width, &img_height);
+    player->animations[3] = mlx_xpm_file_to_image(player->mlx_ptr, "../assets/walk/Walk 4.xpm", &img_width, &img_height);
+    player->animations[4] = mlx_xpm_file_to_image(player->mlx_ptr, "../assets/walk/Walk 5.xpm", &img_width, &img_height);
+    player->animations[5] = mlx_xpm_file_to_image(player->mlx_ptr, "../assets/walk/Walk 6.xpm", &img_width, &img_height);
+    player->animations[6] = mlx_xpm_file_to_image(player->mlx_ptr, "../assets/walk/Walk 7.xpm", &img_width, &img_height);
+    player->animations[7] = mlx_xpm_file_to_image(player->mlx_ptr, "../assets/walk/Walk 8.xpm", &img_width, &img_height);
     walking_animation(player);
 }
 
 void    walking_animation(v_player *player)
 {
     static int  j;
-    int  i;
+    int         i;
 
     i = 0;
     if (j < 8)

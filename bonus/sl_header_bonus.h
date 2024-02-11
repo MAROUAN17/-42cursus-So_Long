@@ -23,12 +23,27 @@ typedef struct s_point {
 	int		y;
 }				t_point;
 
+typedef struct s_enemy {
+	void	*mlx_ptr;
+	void	*mlx_win;
+	int		x;
+	int		y;
+	int		map_width;
+	int		map_height;
+	int		player_x;
+	int		player_y;
+	char	**map;
+	void	*animations[8];
+}				v_enemy;
+
 typedef struct s_player {
 	void	*mlx_ptr;
 	void	*mlx_win;
 	char	**map;
 	int		x;
 	int		y;
+	int		enemy_x;
+	int		enemy_y;
 	int		map_width;
 	int		map_height;
 	int		keycode;
@@ -80,5 +95,10 @@ void	walking_animation(v_player *player);
 void	render_map_image_all_map(v_player *player, int x, int y);
 void	rend_assets(void *mlx, void *mlx_win, char **map, int width, int height);
 void	get_animation_images(v_player *player);
+void	rendering_enemy(void *mlx_ptr, void *mlx_win, int x, int y);
+void	enemy_get_animation_images(v_enemy *enemy);
+void	find_enemy_position(char **map, int width, int height, int *p_x, int *p_y);
+void	enemy_animation(v_enemy *enemy);
+void	enemy_following_player(v_enemy *enemy);
 
 #endif

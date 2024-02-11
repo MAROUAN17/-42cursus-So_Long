@@ -1,9 +1,9 @@
-#include "sl_header.h"
+#include "sl_header_bonus.h"
 
-int rendering_new_frames(v_player *player)
+int rendering_new_frames(v_enemy *enemy)
 {
-    (void)player;
-    // get_animation_images(player);
+    enemy_get_animation_images(enemy);
+    // enemy_following_player(enemy);
     return (0);
 }
 
@@ -48,6 +48,8 @@ void rend_assets(void *mlx, void *mlx_win, char **map, int width, int height)
                 rendering_exit(mlx, mlx_win, x * 50, y * 50);
             else if (map[y][x] == 'P')
                 rendering_player(mlx, mlx_win, x * 50, y * 50);
+            else if (map[y][x] == 'M')
+                rendering_enemy(mlx, mlx_win, x * 50, y * 50);
             x++;
         }
         y++;
@@ -63,6 +65,7 @@ int main(int ac, char **av)
     int     height;
     t_vars      win_vars;
     v_player    player;
+    v_enemy     enemy;
 
     player.collected_collectibles = 0;
     player.moves = 0;
@@ -70,6 +73,8 @@ int main(int ac, char **av)
     width = 0;
     player.x = 0;
     player.y = 0;
+    enemy.x = 0;
+    enemy.y = 0;
     player.keycode = -1;
     if (ac >= 2)
     {
@@ -78,13 +83,25 @@ int main(int ac, char **av)
             return (1);
         win_vars.mlx = mlx;
         map = reading_map(av[1], &width, &height);
+        // ft_printf("width -> %d\n", width);
+	    // ft_printf("height -> %d\n", height);
         player.map = map;
+        enemy.map = map;
         player.mlx_ptr = mlx;
+        enemy.mlx_ptr = mlx;
         player.map_height = height;
         player.map_width = width;
+        enemy.map_height = height;
+        enemy.map_width = width;
         find_player_position(player.map, player.map_width, player.map_height, &player.x, &player.y);
+        find_enemy_position(enemy.map, enemy.map_width, enemy.map_height, &enemy.x, &enemy.y);
+        enemy.player_x = player.x;
+        enemy.player_y = player.y;
+        player.enemy_x = enemy.x;
+        player.enemy_y = enemy.y;
         mlx_win = mlx_new_window(mlx, width * 50, height * 50, "So_Long");
         player.mlx_win = mlx_win;
+        enemy.mlx_win = mlx_win;
         if (!mlx_win)
         {
             free(mlx);
@@ -103,7 +120,7 @@ int main(int ac, char **av)
             exit(1);
         }
         mlx_hook(win_vars.win, 2, 1L<<0, events_handler, &player);
-        mlx_loop_hook(mlx, rendering_new_frames, &player);
+        mlx_loop_hook(mlx, rendering_new_frames, &enemy);
         mlx_loop(mlx);
         free(mlx);
     }
