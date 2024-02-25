@@ -2,8 +2,6 @@
 
 void find_player_position(char **map, int width, int height, int *p_x, int *p_y)
 {
-    // ft_printf("map_width -> %d\n", width);
-    // ft_printf("map_width -> %d\n", height);
     while(*p_y < height)
     {
         *p_x = 0;

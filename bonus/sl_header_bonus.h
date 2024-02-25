@@ -23,34 +23,22 @@ typedef struct s_point {
 	int		y;
 }				t_point;
 
-typedef struct s_enemy {
-	void	*mlx_ptr;
-	void	*mlx_win;
-	int		x;
-	int		y;
-	int		map_width;
-	int		map_height;
-	int		player_x;
-	int		player_y;
-	char	**map;
-	void	*animations[8];
-}				v_enemy;
-
 typedef struct s_player {
-	void	*mlx_ptr;
-	void	*mlx_win;
-	char	**map;
-	int		x;
-	int		y;
-	int		enemy_x;
-	int		enemy_y;
-	int		map_width;
-	int		map_height;
-	int		keycode;
-	int		collected_collectibles;
-	int		moves;
-	int		total_collectibles;
-	void	*animations[8];
+	void		*mlx_ptr;
+	void		*mlx_win;
+	char		**map;
+	int			x;
+	int			y;
+	int			enemy_x;
+	int			enemy_y;
+	int			map_width;
+	int			map_height;
+	int			keycode;
+	int			c_collectibles;
+	int			moves;
+	int			total_collectibles;
+	v_player	*enemies;
+	void		*animations[8];
 }				v_player;
 
 typedef struct	s_data 
@@ -67,6 +55,7 @@ typedef struct	s_vars {
 	void	*win;
 }				t_vars;
 
+char	*ft_itoa(int n);
 int		ft_printf(const char *format, ...);
 char	*get_next_line(int fd);
 char	**reading_map(char *path, int *p_x, int *p_y);
@@ -80,25 +69,27 @@ void	flood_fill(char **map, t_point size, t_point cur,int *p_counter, char to_ch
 int		check_reachable_collectibles(char *path, char **map, int width, int height);
 int		check_reachable_exits(char *path, char **map, int width, int height);
 void	rendering_background(void *mlx_ptr, void *mlx_win, int x, int y);
-void	rendering_ground(void *mlx_ptr, void *mlx_win, int x, int y);
+void	rendering_ground(v_player *player, int x, int y);
 void	rendering_collectible(void *mlx_ptr, void *mlx_win, int x, int y);
-void	rendering_exit(void *mlx_ptr, void *mlx_win, int x, int y);
-void	rendering_player(void *mlx_ptr, void *mlx_win, int x, int y);
-void	rendering_player_rev(void *mlx_ptr, void *mlx_win, int x, int y);
+void	rendering_exit(v_player *player, int x, int y);
+void	rendering_player(v_player *player, int x, int y);
+void	rendering_player_rev(v_player *player, int x, int y);
 void	update_player_position_and_render(v_player *player);
 void	find_player_position(char **map, int width, int height, int *p_x, int *p_y);
-void	move_player_right(v_player *player);
-void	move_player_left(v_player *player);
-void	move_player_up(v_player *player);
-void	move_player_down(v_player *player);
+void	move_player_right(v_player *player, v_player *enemy);
+void	move_player_left(v_player *player, v_player *enemy);
+void	move_player_up(v_player *player, v_player *enemy);
+void	move_player_down(v_player *player, v_player *enemy);
 void	walking_animation(v_player *player);
 void	render_map_image_all_map(v_player *player, int x, int y);
-void	rend_assets(void *mlx, void *mlx_win, char **map, int width, int height);
+void	rend_assets(v_player *player, char **map, int width, int height);
 void	get_animation_images(v_player *player);
-void	rendering_enemy(void *mlx_ptr, void *mlx_win, int x, int y);
-void	enemy_get_animation_images(v_enemy *enemy);
+void	rendering_enemy(v_player *player, int x, int y);
+void	enemy_get_animation_images(v_player *enemy);
 void	find_enemy_position(char **map, int width, int height, int *p_x, int *p_y);
-void	enemy_animation(v_enemy *enemy);
-void	enemy_following_player(v_enemy *enemy);
+void	enemy_animation(v_player *enemy, int x, int y);
+void	enemy_following_player(v_player *enemy);
+void	display_moves(v_player *player);
+void	rendering_collectibles(v_player *enemy, char **map, int width, int height);
 
 #endif

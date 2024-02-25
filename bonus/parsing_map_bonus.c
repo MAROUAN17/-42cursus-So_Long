@@ -8,7 +8,6 @@ void count_lines_rows(char *path, int *p_lines, int *p_rows)
 
     fd = open(path, O_RDONLY);
     line = get_next_line(fd);
-    ft_printf("line -> %p\n", line);
     while (line)
     {
         index = 0;

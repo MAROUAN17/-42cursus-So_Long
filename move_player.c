@@ -7,7 +7,7 @@ void move_player_right(v_player *player)
     {
         if (player->map[player->y][player->x + 1] == 'E')
         {
-            if (player->collected_collectibles == player->total_collectibles)
+            if (player->c_collectibles == player->total_collectibles)
             {
                 mlx_destroy_window(player->mlx_ptr, player->mlx_win);
                 exit(0);
@@ -20,7 +20,7 @@ void move_player_right(v_player *player)
             if (player->map[player->y][player->x + 1] == 'C')
             {
                 player->map[player->y][player->x + 1] = '0';   
-                player->collected_collectibles++;
+                player->c_collectibles++;
             }
             player->x += 1;
         }
@@ -34,7 +34,7 @@ void move_player_left(v_player *player)
     {
         if (player->map[player->y][player->x - 1] == 'E')
         {
-            if (player->collected_collectibles == player->total_collectibles)
+            if (player->c_collectibles == player->total_collectibles)
             {
                 mlx_destroy_window(player->mlx_ptr, player->mlx_win);
                 exit(0);
@@ -47,7 +47,7 @@ void move_player_left(v_player *player)
             if (player->map[player->y][player->x - 1] == 'C')
             {
                 player->map[player->y][player->x - 1] = '0'; 
-                player->collected_collectibles++;
+                player->c_collectibles++;
             }
             player->x -= 1;
         }
@@ -61,7 +61,7 @@ void move_player_up(v_player *player)
     {
         if (player->map[player->y + 1][player->x] == 'E')
         {
-            if (player->collected_collectibles == player->total_collectibles)
+            if (player->c_collectibles == player->total_collectibles)
             {
                 mlx_destroy_window(player->mlx_ptr, player->mlx_win);
                 exit(0);
@@ -74,7 +74,7 @@ void move_player_up(v_player *player)
             if (player->map[player->y + 1][player->x] == 'C')
             {
                 player->map[player->y + 1][player->x] = '0';    
-                player->collected_collectibles++;
+                player->c_collectibles++;
             }
             player->y += 1;
         }
@@ -88,7 +88,7 @@ void move_player_down(v_player *player)
     {
         if (player->map[player->y - 1][player->x] == 'E')
         {
-            if (player->collected_collectibles == player->total_collectibles)
+            if (player->c_collectibles == player->total_collectibles)
             {
                 mlx_destroy_window(player->mlx_ptr, player->mlx_win);
                 exit(0);
@@ -101,7 +101,7 @@ void move_player_down(v_player *player)
             if (player->map[player->y - 1][player->x] == 'C')
             {
                 player->map[player->y - 1][player->x] = '0';
-                player->collected_collectibles++;
+                player->c_collectibles++;
             }
             player->y -= 1;
         }
@@ -127,9 +127,8 @@ void get_animation_images(v_player *player)
 void    walking_animation(v_player *player)
 {
     static int  j;
-    int  i;
+    int         i;
 
-    i = 0;
     if (j < 8)
     {
         rendering_background(player->mlx_ptr, player->mlx_win, player->x * 50 , player->y * 50);

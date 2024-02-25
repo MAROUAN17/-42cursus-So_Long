@@ -1,13 +1,13 @@
 #include "sl_header_bonus.h"
 
-void move_player_right(v_player *player)
+void move_player_right(v_player *player, v_player *enemy)
 {
     player->keycode = 2;
     if (player->map[player->y][player->x + 1] != '1')
     {
         if (player->map[player->y][player->x + 1] == 'E')
         {
-            if (player->collected_collectibles == player->total_collectibles)
+            if (player->c_collectibles == player->total_collectibles)
             {
                 mlx_destroy_window(player->mlx_ptr, player->mlx_win);
                 exit(0);
@@ -18,22 +18,25 @@ void move_player_right(v_player *player)
             player->moves++;
             if (player->map[player->y][player->x + 1] == 'C')
             {
-                player->map[player->y][player->x + 1] = '0';   
-                player->collected_collectibles++;
+                player->map[player->y][player->x + 1] = '0';
+                enemy->map = player->map;
+                player->c_collectibles++;
             }
             player->x += 1;
+            enemy->x += 1;
+            update_player_position_and_render(player);
         }
     }
 }
 
-void move_player_left(v_player *player)
+void move_player_left(v_player *player, v_player *enemy)
 {
     player->keycode = 0;
     if (player->map[player->y][player->x - 1] != '1')
     {
         if (player->map[player->y][player->x - 1] == 'E')
         {
-            if (player->collected_collectibles == player->total_collectibles)
+            if (player->c_collectibles == player->total_collectibles)
             {
                 mlx_destroy_window(player->mlx_ptr, player->mlx_win);
                 exit(0);
@@ -44,48 +47,25 @@ void move_player_left(v_player *player)
             player->moves++;
             if (player->map[player->y][player->x - 1] == 'C')
             {
-                player->map[player->y][player->x - 1] = '0'; 
-                player->collected_collectibles++;
+                player->map[player->y][player->x - 1] = '0';
+                enemy->map = player->map;
+                player->c_collectibles++;
             }
             player->x -= 1;
+            enemy->x -= 1;
+            update_player_position_and_render(player);
         }
     }
 }
 
-void move_player_up(v_player *player)
+void move_player_up(v_player *player, v_player *enemy)
 {
     player->keycode = 1;
-    if (player->map[player->y + 1][player->x] != '1')
-    {
-        if (player->map[player->y + 1][player->x] == 'E')
-        {
-            if (player->collected_collectibles == player->total_collectibles)
-            {
-                mlx_destroy_window(player->mlx_ptr, player->mlx_win);
-                exit(0);
-            }
-        }
-        else
-        {
-            player->moves++;
-            if (player->map[player->y + 1][player->x] == 'C')
-            {
-                player->map[player->y + 1][player->x] = '0';    
-                player->collected_collectibles++;
-            }
-            player->y += 1;
-        }
-    }
-}
-
-void move_player_down(v_player *player)
-{
-    player->keycode = 13;
     if (player->map[player->y - 1][player->x] != '1')
     {
         if (player->map[player->y - 1][player->x] == 'E')
         {
-            if (player->collected_collectibles == player->total_collectibles)
+            if (player->c_collectibles == player->total_collectibles)
             {
                 mlx_destroy_window(player->mlx_ptr, player->mlx_win);
                 exit(0);
@@ -97,9 +77,42 @@ void move_player_down(v_player *player)
             if (player->map[player->y - 1][player->x] == 'C')
             {
                 player->map[player->y - 1][player->x] = '0';
-                player->collected_collectibles++;
+                enemy->map = player->map;
+                player->c_collectibles++;
             }
             player->y -= 1;
+            enemy->y -= 1;
+            update_player_position_and_render(player);
+        }
+    }
+    
+}
+
+void move_player_down(v_player *player, v_player *enemy)
+{
+    player->keycode = 13;
+    if (player->map[player->y + 1][player->x] != '1')
+    {
+        if (player->map[player->y + 1][player->x] == 'E')
+        {
+            if (player->c_collectibles == player->total_collectibles)
+            {
+                mlx_destroy_window(player->mlx_ptr, player->mlx_win);
+                exit(0);
+            }
+        }
+        else
+        {
+            player->moves++;
+            if (player->map[player->y + 1][player->x] == 'C')
+            {
+                player->map[player->y + 1][player->x] = '0';
+                enemy->map = player->map; 
+                player->c_collectibles++;
+            }
+            player->y += 1;
+            enemy->y += 1;
+            update_player_position_and_render(player);
         }
     }
 }
@@ -123,17 +136,12 @@ void get_animation_images(v_player *player)
 void    walking_animation(v_player *player)
 {
     static int  j;
-    int         i;
 
-    i = 0;
     if (j < 8)
     {
         rendering_background(player->mlx_ptr, player->mlx_win, player->x * 50 , player->y * 50);
         mlx_put_image_to_window(player->mlx_ptr, player->mlx_win, player->animations[j], player->x * 50, player->y * 50);
         j++;
-        while (i < 5000000)
-            i++;
-        i = 0;
     }
     if (j == 8)
         j = 0;

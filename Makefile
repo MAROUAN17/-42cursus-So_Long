@@ -6,7 +6,7 @@ OBJS = ${SRCS:.c=.o}
 SRCS_BNS = ./bonus/so_long_main_bonus.c ./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c \
 	   ./bonus/parsing_map_bonus.c ./bonus/map_parsing_utils_bonus.c ./bonus/check_reachable_bonus.c ./bonus/rendering_images_bonus.c \
 	   ./bonus/find_position_bonus.c ./bonus/move_player_bonus.c ./bonus/reading_map_bonus.c ./bonus/render_background_all_map_bonus.c \
-	   ./bonus/update_player_position_bonus.c ./bonus/enemy_movement.c
+	   ./bonus/update_player_position_bonus.c ./bonus/enemy_movement_bonus.c ./bonus/moves_display_screen_bonus.c
 OBJS_BNS = ${SRCS_BNS:.c=.o}
 FLAGS = -Wall -Werror -Wextra
 CC = cc

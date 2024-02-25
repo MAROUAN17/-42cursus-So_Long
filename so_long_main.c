@@ -64,7 +64,7 @@ int main(int ac, char **av)
     t_vars      win_vars;
     v_player    player;
 
-    player.collected_collectibles = 0;
+    player.c_collectibles = 0;
     player.moves = 0;
     height = 0;
     width = 0;

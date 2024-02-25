@@ -32,7 +32,7 @@ typedef struct s_player {
 	int		map_width;
 	int		map_height;
 	int		keycode;
-	int		collected_collectibles;
+	int		c_collectibles;
 	int		moves;
 	int		total_collectibles;
 	void	*animations[8];
