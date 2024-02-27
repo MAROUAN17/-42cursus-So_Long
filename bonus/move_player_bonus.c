@@ -1,7 +1,10 @@
 #include "sl_header_bonus.h"
 
-void move_player_right(v_player *player, v_player *enemy)
+void move_player_right(v_player *player)
 {
+    int i;
+
+    i = 0;
     player->keycode = 2;
     if (player->map[player->y][player->x + 1] != '1')
     {
@@ -19,18 +22,18 @@ void move_player_right(v_player *player, v_player *enemy)
             if (player->map[player->y][player->x + 1] == 'C')
             {
                 player->map[player->y][player->x + 1] = '0';
-                enemy->map = player->map;
                 player->c_collectibles++;
             }
             player->x += 1;
-            enemy->x += 1;
-            update_player_position_and_render(player);
         }
     }
 }
 
-void move_player_left(v_player *player, v_player *enemy)
+void move_player_left(v_player *player)
 {
+    int i;
+
+    i = 0;
     player->keycode = 0;
     if (player->map[player->y][player->x - 1] != '1')
     {
@@ -48,18 +51,18 @@ void move_player_left(v_player *player, v_player *enemy)
             if (player->map[player->y][player->x - 1] == 'C')
             {
                 player->map[player->y][player->x - 1] = '0';
-                enemy->map = player->map;
                 player->c_collectibles++;
             }
             player->x -= 1;
-            enemy->x -= 1;
-            update_player_position_and_render(player);
         }
     }
 }
 
-void move_player_up(v_player *player, v_player *enemy)
+void move_player_up(v_player *player)
 {
+    int i;
+
+    i = 0;
     player->keycode = 1;
     if (player->map[player->y - 1][player->x] != '1')
     {
@@ -77,19 +80,19 @@ void move_player_up(v_player *player, v_player *enemy)
             if (player->map[player->y - 1][player->x] == 'C')
             {
                 player->map[player->y - 1][player->x] = '0';
-                enemy->map = player->map;
                 player->c_collectibles++;
             }
             player->y -= 1;
-            enemy->y -= 1;
-            update_player_position_and_render(player);
         }
     }
     
 }
 
-void move_player_down(v_player *player, v_player *enemy)
+void move_player_down(v_player *player)
 {
+    int i;
+
+    i = 0;
     player->keycode = 13;
     if (player->map[player->y + 1][player->x] != '1')
     {
@@ -107,12 +110,9 @@ void move_player_down(v_player *player, v_player *enemy)
             if (player->map[player->y + 1][player->x] == 'C')
             {
                 player->map[player->y + 1][player->x] = '0';
-                enemy->map = player->map; 
                 player->c_collectibles++;
             }
             player->y += 1;
-            enemy->y += 1;
-            update_player_position_and_render(player);
         }
     }
 }

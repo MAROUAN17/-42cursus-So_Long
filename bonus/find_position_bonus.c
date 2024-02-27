@@ -1,13 +1,13 @@
 #include "sl_header_bonus.h"
 
-void find_player_position(char **map, int width, int height, int *p_x, int *p_y)
+void find_player_position(v_player *player, int *p_x, int *p_y)
 {
-    while (*p_y < height)
+    while (*p_y < player->map_height)
     {
         *p_x = 0;
-        while (*p_x < width)
+        while (*p_x < player->map_width)
         {
-            if (map[*p_y][*p_x] == 'P')
+            if (player->map[*p_y][*p_x] == 'P')
                 return;
             (*p_x)++;
         }
@@ -15,15 +15,37 @@ void find_player_position(char **map, int width, int height, int *p_x, int *p_y)
     }
 }
 
-void find_enemy_position(char **map, int width, int height, int *p_x, int *p_y)
+void find_enemy_position(v_player *player, int *p_x, int *p_y, int is_main)
 {
-    while (*p_y < height)
+    static int last_x;
+    static int last_y;
+
+    *p_x = last_x;
+    *p_y = last_y;
+    while (*p_y < player->map_height)
     {
-        *p_x = 0;
-        while (*p_x < width)
+        if (*p_x == player->map_width)
+            *p_x = 0;
+        while (*p_x < player->map_width)
         {
-            if (map[*p_y][*p_x] == 'M')
-                return;
+            if (player->map[*p_y][*p_x] == 'M')
+            {
+                if (!is_main)
+                {
+                    if (*p_x != last_x || *p_y != last_y)
+                    {
+                        last_x = *p_x;
+                        last_y = *p_y;
+                        return;
+                    }
+                }
+                else
+                {
+                    last_x = *p_x;    
+                    last_y = *p_y;    
+                    return;
+                }
+            }
             (*p_x)++;
         }
         (*p_y)++;

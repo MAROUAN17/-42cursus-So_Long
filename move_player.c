@@ -127,7 +127,7 @@ void get_animation_images(v_player *player)
 void    walking_animation(v_player *player)
 {
     static int  j;
-    int         i;
+    static int  i;
 
     if (j < 8)
     {
