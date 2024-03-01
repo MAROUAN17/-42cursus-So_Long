@@ -1,10 +1,7 @@
-#include "sl_header_bonus.h"
+#include "sl_header.h"
 
 void move_player_right(v_player *player)
 {
-    int i;
-
-    i = 0;
     player->keycode = 2;
     if (player->map[player->y][player->x + 1] != '1')
     {
@@ -19,9 +16,10 @@ void move_player_right(v_player *player)
         else
         {
             player->moves++;
+            ft_printf("moves -> %d\n", player->moves);
             if (player->map[player->y][player->x + 1] == 'C')
             {
-                player->map[player->y][player->x + 1] = '0';
+                player->map[player->y][player->x + 1] = '0';   
                 player->c_collectibles++;
             }
             player->x += 1;
@@ -31,9 +29,6 @@ void move_player_right(v_player *player)
 
 void move_player_left(v_player *player)
 {
-    int i;
-
-    i = 0;
     player->keycode = 0;
     if (player->map[player->y][player->x - 1] != '1')
     {
@@ -48,9 +43,10 @@ void move_player_left(v_player *player)
         else
         {
             player->moves++;
+            ft_printf("moves -> %d\n", player->moves);
             if (player->map[player->y][player->x - 1] == 'C')
             {
-                player->map[player->y][player->x - 1] = '0';
+                player->map[player->y][player->x - 1] = '0'; 
                 player->c_collectibles++;
             }
             player->x -= 1;
@@ -60,40 +56,7 @@ void move_player_left(v_player *player)
 
 void move_player_up(v_player *player)
 {
-    int i;
-
-    i = 0;
     player->keycode = 1;
-    if (player->map[player->y - 1][player->x] != '1')
-    {
-        if (player->map[player->y - 1][player->x] == 'E')
-        {
-            if (player->c_collectibles == player->total_collectibles)
-            {
-                ft_close(player);
-                exit(0);
-            }
-        }
-        else
-        {
-            player->moves++;
-            if (player->map[player->y - 1][player->x] == 'C')
-            {
-                player->map[player->y - 1][player->x] = '0';
-                player->c_collectibles++;
-            }
-            player->y -= 1;
-        }
-    }
-    
-}
-
-void move_player_down(v_player *player)
-{
-    int i;
-
-    i = 0;
-    player->keycode = 13;
     if (player->map[player->y + 1][player->x] != '1')
     {
         if (player->map[player->y + 1][player->x] == 'E')
@@ -107,12 +70,40 @@ void move_player_down(v_player *player)
         else
         {
             player->moves++;
+            ft_printf("moves -> %d\n", player->moves);
             if (player->map[player->y + 1][player->x] == 'C')
             {
-                player->map[player->y + 1][player->x] = '0';
+                player->map[player->y + 1][player->x] = '0';    
                 player->c_collectibles++;
             }
             player->y += 1;
+        }
+    }
+}
+
+void move_player_down(v_player *player)
+{
+    player->keycode = 13;
+    if (player->map[player->y - 1][player->x] != '1')
+    {
+        if (player->map[player->y - 1][player->x] == 'E')
+        {
+            if (player->c_collectibles == player->total_collectibles)
+            {
+                ft_close(player);
+                exit(0);
+            }
+        }
+        else
+        {
+            player->moves++;
+            ft_printf("moves -> %d\n", player->moves);
+            if (player->map[player->y - 1][player->x] == 'C')
+            {
+                player->map[player->y - 1][player->x] = '0';
+                player->c_collectibles++;
+            }
+            player->y -= 1;
         }
     }
 }
@@ -132,12 +123,16 @@ void get_animation_images(v_player *player)
 void    walking_animation(v_player *player)
 {
     static int  j;
+    static int  i;
 
     if (j < 8)
     {
-        mlx_put_image_to_window(player->mlx_ptr, player->mlx_win, player->background_img, player->x * 50 , player->y * 50);
+        mlx_put_image_to_window(player->mlx_ptr, player->mlx_win, player->background, player->x * 50 , player->y * 50);
         mlx_put_image_to_window(player->mlx_ptr, player->mlx_win, player->animations[j], player->x * 50, player->y * 50);
         j++;
+        while (i < 5000000)
+            i++;
+        i = 0;
     }
     if (j == 8)
         j = 0;

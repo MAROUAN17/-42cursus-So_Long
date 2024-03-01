@@ -15,7 +15,11 @@ void find_player_position(v_player *player, int *p_x, int *p_y)
     }
 }
 
-void find_enemy_position(v_player *player, int *p_x, int *p_y, int is_main)
+void finding_main_enemy_position()
+{
+}
+
+void find_enemy_position(v_player *player, int *p_x, int *p_y)
 {
     static int last_x;
     static int last_y;
@@ -30,19 +34,10 @@ void find_enemy_position(v_player *player, int *p_x, int *p_y, int is_main)
         {
             if (player->map[*p_y][*p_x] == 'M')
             {
-                if (!is_main)
+                if (*p_x != last_x || *p_y != last_y)
                 {
-                    if (*p_x != last_x || *p_y != last_y)
-                    {
-                        last_x = *p_x;
-                        last_y = *p_y;
-                        return;
-                    }
-                }
-                else
-                {
-                    last_x = *p_x;    
-                    last_y = *p_y;    
+                    last_x = *p_x;
+                    last_y = *p_y;
                     return;
                 }
             }

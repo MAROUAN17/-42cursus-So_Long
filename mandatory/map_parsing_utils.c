@@ -1,4 +1,4 @@
-#include "sl_header_bonus.h"
+#include "sl_header.h"
 
 int check_collectible(char **map, int width, int height)
 {
@@ -11,10 +11,10 @@ int check_collectible(char **map, int width, int height)
 	y = 0;
 	check = 0;
 	collectible = 0;
-	while (y < height)
+	while(y < height)
 	{
 		x = 0;
-		while (x < width)
+		while(x < width)
 		{
 			if (map[y][x] == 'C')
 				collectible++;
@@ -22,7 +22,7 @@ int check_collectible(char **map, int width, int height)
 		}
 		y++;
 	}
-	if (collectible == 0)
+	if(collectible == 0)
 		check = 1;
 	else
 		check = 0;
@@ -40,10 +40,10 @@ int check_exits(char **map, int width, int height)
 	y = 0;
 	check = 0;
 	exits = 0;
-	while (y < height)
+	while(y < height)
 	{
 		x = 0;
-		while (x < width)
+		while(x < width)
 		{
 			if(map[y][x] == 'E')
 				exits++;
@@ -51,7 +51,7 @@ int check_exits(char **map, int width, int height)
 		}
 		y++;
 	}
-	if (exits == 0)
+	if(exits == 0)
 		check = 1;
 	else
 		check = 0;

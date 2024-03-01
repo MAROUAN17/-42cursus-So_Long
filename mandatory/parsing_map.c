@@ -1,4 +1,4 @@
-#include "sl_header_bonus.h"
+#include "sl_header.h"
 
 void count_lines_rows(v_player *player, int *p_lines, int *p_rows)
 {
@@ -6,11 +6,12 @@ void count_lines_rows(v_player *player, int *p_lines, int *p_rows)
     char    *line;
     int     index;
 
-    fd = open(player->map_path, O_RDONLY);
+    if ((fd = open(player->map_path, O_RDONLY)) == -1)
+        exit(1);
     while ((line = get_next_line(fd)))
     {
         index = 0;
-        while (*(line + index) && (*p_lines) == 0)
+        while (*(line + index) && !(*p_lines))
         {
             index++;
             (*p_rows)++;
@@ -42,7 +43,7 @@ int other_lines(char **map, int y, int width)
 
     x = 0;
     check = 0;
-    if(map[y][x] != '1' || map[y][width - 1] != '1')
+    if (map[y][x] != '1' || map[y][width - 1] != '1')
         check = 1;
     return (check);
 }
@@ -60,9 +61,9 @@ int check_walls(char **map, int height, int width)
     {
         x = 0;
         if (y == 0 || y == height - 1)
-            first_line_and_last(map, y, width);
+            check = first_line_and_last(map, y, width);
         else
-            other_lines(map, y, width);
+            check = other_lines(map, y, width);
         y++;
     }
     return (check);
@@ -83,7 +84,7 @@ int check_rectangular_map(char **map, int height, int width)
     {
         x = 0;
         counter = 0;
-        while(map[y][counter] && map[y][counter] != '\n')
+        while (map[y][counter] && map[y][counter] != '\n')
             counter++;
         if (counter != width)
         {
@@ -106,17 +107,10 @@ int parsing_map(v_player *player)
     check = 0;
     x = 0;
     y = 0;
-    if(player->map_height > player->map_width || player->map_height == player->map_width || !player->map[0][0]
-        || check_rectangular_map(player->map, player->map_height, player->map_width) || check_walls(player->map, player->map_height, player->map_width)
-        || check_collectible(player->map, player->map_width, player->map_height) || check_exits(player->map, player->map_width, player->map_height) 
-        || check_start(player->map, player->map_width, player->map_height) || check_reachable_collectibles(player)
-        || check_reachable_exits(player))
-    {
-        // ft_printf("check collectible -> %d\n", check_collectible(player->map, player->map_width, player->map_height));
-        // ft_printf("check rectangular -> %d\n", check_rectangular_map(player->map, player->map_height, player->map_width));
-        // ft_printf("check_reachable_collectible -> %d\n", check_reachable_collectibles(player));
-        // ft_printf("check_reachable_exits -> %d\n", check_reachable_exits(player));
+    if (player->map_height > player->map_width || player->map_height == player->map_width || !player->map[0][0] || check_rectangular_map(player->map, player->map_height, player->map_width)
+        || check_walls(player->map, player->map_height, player->map_width) || check_collectible(player->map, player->map_width, player->map_height) 
+        || check_exits(player->map, player->map_width, player->map_height) || check_start(player->map, player->map_width, player->map_height) 
+        || check_reachable_collectibles(player) || check_reachable_exits(player))
         check = 1;
-    }
     return (check);
 }

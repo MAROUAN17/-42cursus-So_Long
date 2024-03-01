@@ -1,4 +1,4 @@
-#include "sl_header_bonus.h"
+#include "sl_header.h"
 
 int check_reachable_collectibles(v_player *player)
 {
@@ -14,13 +14,13 @@ int check_reachable_collectibles(v_player *player)
 	player_start.y = 2;
 	size.x = player->map_width;
 	size.y = player->map_height;
-	map_test = reading_map(player);
+	map_test = reading_map(player, player->map_path);
 	flood_fill(map_test, size, player_start, &collectibles, 'C');
-	if (collectibles == count_a_tile(player, 'C'))
+	if (collectibles == player->total_collectibles)
 		check = 0;
 	else
 		check = 1;
-    free_map(map_test, player->map_height);
+	free_map(map_test, player->map_height);
 	return (check);
 }
 
@@ -38,12 +38,12 @@ int check_reachable_exits(v_player *player)
 	player_start.y = 2;
 	size.x = player->map_width;
 	size.y = player->map_height;
-	map_test = reading_map(player);
+	map_test = reading_map(player, player->map_path);
 	flood_fill(map_test, size, player_start, &exits, 'E');
-	if (exits == count_a_tile(player, 'E'))
+	if (exits == player->total_collectibles)
 		check = 0;
 	else
 		check = 1;
-    free_map(map_test, player->map_height);
+	free_map(map_test, player->map_height);
 	return (check);
 }
