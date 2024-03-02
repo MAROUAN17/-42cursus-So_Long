@@ -1,85 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_parsing_utils.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maglagal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/02 16:56:00 by maglagal          #+#    #+#             */
+/*   Updated: 2024/03/02 18:14:43 by maglagal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sl_header.h"
 
-int check_collectible(char **map, int width, int height)
+int	check_collectible(t_player *player)
 {
-	int x;
-	int y;
-	int check;
-	int collectible;
+	int	check;
+	int	collectible;
 
-	x = 0;
-	y = 0;
-	check = 0;
-	collectible = 0;
-	while(y < height)
-	{
-		x = 0;
-		while(x < width)
-		{
-			if (map[y][x] == 'C')
-				collectible++;
-			x++;
-		}
-		y++;
-	}
-	if(collectible == 0)
+	collectible = count_a_tile(player, 'C');
+	if (collectible == 0)
 		check = 1;
 	else
 		check = 0;
 	return (check);
 }
 
-int check_exits(char **map, int width, int height)
+int	check_exits(t_player *player)
 {
-	int x;
-	int y;
-	int check;
-	int exits;
+	int	check;
+	int	exits;
 
-	x = 0;
-	y = 0;
-	check = 0;
-	exits = 0;
-	while(y < height)
-	{
-		x = 0;
-		while(x < width)
-		{
-			if(map[y][x] == 'E')
-				exits++;
-			x++;
-		}
-		y++;
-	}
-	if(exits == 0)
+	exits = count_a_tile(player, 'E');
+	if (exits == 0)
 		check = 1;
 	else
 		check = 0;
 	return (check);
 }
 
-int check_start(char **map, int width, int height)
+int	check_start(t_player *player)
 {
-	int x;
-	int y;
-	int check;
-	int starts;
+	int	check;
+	int	starts;
 
-	x = 0;
-	y = 0;
-	check = 0;
-	starts = 0;
-	while (y < height)
-	{
-		x = 0;
-		while (x < width)
-		{
-			if (map[y][x] == 'P')
-				starts++;
-			x++;
-		}
-		y++;
-	}
+	starts = count_a_tile(player, 'P');
 	if (starts == 0)
 		check = 1;
 	else
@@ -87,7 +51,7 @@ int check_start(char **map, int width, int height)
 	return (check);
 }
 
-int count_a_tile(v_player *player, char to_count)
+int	count_a_tile(t_player *player, char to_count)
 {
 	int	x;
 	int	y;
@@ -110,16 +74,29 @@ int count_a_tile(v_player *player, char to_count)
 	return (counter);
 }
 
-void flood_fill(char **map, t_point size, t_point cur,int *p_counter, char to_check)
+void	count_lines_rows(t_player *player, int *p_lines, int *p_rows)
 {
-	if (cur.y >= size.y || cur.x >= size.x || cur.x < 0
-		|| cur.y < 0 || map[cur.y][cur.x] == '1')
-		return;
-	if (map[cur.y][cur.x] == to_check)
-		(*p_counter)++;
-	map[cur.y][cur.x] = '1';
-	flood_fill(map, size, (t_point){cur.x - 1, cur.y}, p_counter, to_check);
-	flood_fill(map, size, (t_point){cur.x + 1, cur.y}, p_counter, to_check);
-	flood_fill(map, size, (t_point){cur.x, cur.y + 1}, p_counter, to_check);
-	flood_fill(map, size, (t_point){cur.x, cur.y - 1}, p_counter, to_check);
+	int		fd;
+	char	*line;
+	int		index;
+
+	fd = open(player->map_path, O_RDONLY);
+	if (fd == -1)
+		exit(1);
+	line = get_next_line(fd);
+	if (!line)
+		ft_close(player, 1);
+	while (line)
+	{
+		index = 0;
+		while (*(line + index) && !(*p_lines))
+		{
+			index++;
+			(*p_rows)++;
+		}
+		(*p_lines)++;
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
 }

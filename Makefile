@@ -1,12 +1,12 @@
-SRCS =	./mandatory/so_long_main.c ./mandatory/parsing_map.c ./mandatory/map_parsing_utils.c ./mandatory/check_reachable.c \
+SRCS =	./mandatory/so_long.c ./mandatory/parsing_map.c ./mandatory/map_parsing_utils.c ./mandatory/check_reachable.c \
 		./mandatory/rendering_images.c ./mandatory/find_player_position.c ./mandatory/move_player.c \
-		./mandatory/reading_map.c ./mandatory/initializing_all_images.c ./mandatory/update_player_position.c \
-		./mandatory/handling_memory.c ./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c
+		./mandatory/reading_map.c ./mandatory/updating_player.c ./mandatory/initialization.c \
+		./mandatory/handling_memory.c ./mandatory/map_parsing_utils2.c ./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c
 OBJS = ${SRCS:.c=.o}
-SRCS_BNS = ./bonus/so_long_main_bonus.c ./bonus/parsing_map_bonus.c ./bonus/map_parsing_utils_bonus.c ./bonus/check_reachable_bonus.c \
+SRCS_BNS = ./bonus/so_long_bonus.c ./bonus/parsing_map_bonus.c ./bonus/map_parsing_utils_bonus.c ./bonus/check_reachable_bonus.c \
 		./bonus/rendering_images_bonus.c ./bonus/find_position_bonus.c ./bonus/move_player_bonus.c ./bonus/reading_map_bonus.c \
 		./bonus/render_element_all_map_bonus.c ./bonus/update_player_position_bonus.c ./bonus/enemy_movement_bonus.c ./bonus/moves_display_screen_bonus.c \
-		./bonus/animating_enemies_bonus.c ./bonus/initialization_bonus.c ./bonus/handling_memory_bonus.c \
+		./bonus/animating_enemies_bonus.c ./bonus/initialization_bonus.c ./bonus/handling_memory_bonus.c ./bonus/map_parsing_utils_bonus2.c \
 		./bonus/choosing_movement_bonus.c ./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c
 OBJS_BNS = ${SRCS_BNS:.c=.o}
 

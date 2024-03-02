@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_player_position.c                             :+:      :+:    :+:   */
+/*   map_parsing_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maglagal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/02 16:51:36 by maglagal          #+#    #+#             */
-/*   Updated: 2024/03/02 18:10:10 by maglagal         ###   ########.fr       */
+/*   Created: 2024/03/02 18:34:14 by maglagal          #+#    #+#             */
+/*   Updated: 2024/03/02 18:34:19 by maglagal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sl_header.h"
 
-void	find_player_position(t_player *player, int *p_x, int *p_y)
+int	path_check(t_player *player)
 {
-	while (*p_y < player->map_height)
-	{
-		*p_x = 0;
-		while (*p_x < player->map_width)
-		{
-			if (player->map[*p_y][*p_x] == 'P')
-				return ;
-			(*p_x)++;
-		}
-		(*p_y)++;
-	}
+	int		path_len;
+	int		extension_len;
+	int		check;
+	char	*extension;
+
+	extension = ".ber";
+	extension_len = ft_strlen(extension);
+	path_len = ft_strlen(player->map_path);
+	if (!ft_strncmp(player->map_path + path_len - extension_len, extension, 4))
+		check = 0;
+	else
+		check = 1;
+	return (check);
 }
