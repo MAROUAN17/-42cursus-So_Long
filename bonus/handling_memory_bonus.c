@@ -6,7 +6,7 @@
 /*   By: maglagal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 20:51:48 by maglagal          #+#    #+#             */
-/*   Updated: 2024/03/02 18:18:39 by maglagal         ###   ########.fr       */
+/*   Updated: 2024/03/04 19:47:03 by maglagal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_close(t_player *player, int status)
 	int	i;
 
 	i = 0;
-	if (player->map[0])
+	if (player->map)
 		free_map(player->map, player->map_height);
 	if (player->mlx_win)
 		mlx_destroy_window(player->mlx_ptr, player->mlx_win);
@@ -58,10 +58,20 @@ void	ft_close(t_player *player, int status)
 		i++;
 	}
 	i = 0;
-	while (player->e_animations[i] && i < 8)
+	while (player->e_animations[i] && i < 6)
 	{
 		mlx_destroy_image(player->mlx_ptr, player->e_animations[i]);
 		i++;
 	}
+	if (player->enemies)
+		free(player->enemies);
 	exit(status);
+}
+
+int	destroy_window(t_player *player)
+{
+	mlx_destroy_window(player->mlx_ptr, player->mlx_win);
+	player->mlx_win = NULL;
+	ft_close(player, 0);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: maglagal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 17:14:16 by maglagal          #+#    #+#             */
-/*   Updated: 2024/03/02 18:31:39 by maglagal         ###   ########.fr       */
+/*   Updated: 2024/03/08 21:32:33 by maglagal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <mlx.h>
-# include <stdio.h>
 
 typedef struct s_point
 {
@@ -87,5 +86,7 @@ void	initialize_player_struct(t_player *player);
 void	rendering_images(t_player *player, int x, int y);
 void	put_img_to_window(t_player *player, void *img, int x, int y);
 int		path_check(t_player *player);
+void	count_rows(char **line, int *p_rows, int *p_lines);
+int		destroy_window(t_player *player);
 
 #endif

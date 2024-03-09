@@ -6,7 +6,7 @@
 /*   By: maglagal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 16:56:00 by maglagal          #+#    #+#             */
-/*   Updated: 2024/03/02 18:14:43 by maglagal         ###   ########.fr       */
+/*   Updated: 2024/03/04 20:25:28 by maglagal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_exits(t_player *player)
 	int	exits;
 
 	exits = count_a_tile(player, 'E');
-	if (exits == 0)
+	if (exits != 1)
 		check = 1;
 	else
 		check = 0;
@@ -44,7 +44,7 @@ int	check_start(t_player *player)
 	int	starts;
 
 	starts = count_a_tile(player, 'P');
-	if (starts == 0)
+	if (starts != 1)
 		check = 1;
 	else
 		check = 0;
@@ -78,24 +78,19 @@ void	count_lines_rows(t_player *player, int *p_lines, int *p_rows)
 {
 	int		fd;
 	char	*line;
-	int		index;
 
+	line = NULL;
 	fd = open(player->map_path, O_RDONLY);
-	if (fd == -1)
-		exit(1);
 	line = get_next_line(fd);
-	if (!line)
+	if (!line || fd == -1)
+	{
+		ft_putstr_fd("Error\n", 2);
+		ft_putstr_fd("Map not found!\n", 2);
 		ft_close(player, 1);
+	}
 	while (line)
 	{
-		index = 0;
-		while (*(line + index) && !(*p_lines))
-		{
-			index++;
-			(*p_rows)++;
-		}
-		(*p_lines)++;
-		free(line);
+		count_rows(&line, p_rows, p_lines);
 		line = get_next_line(fd);
 	}
 	close(fd);

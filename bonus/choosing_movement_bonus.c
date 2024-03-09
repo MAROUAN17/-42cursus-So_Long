@@ -6,7 +6,7 @@
 /*   By: maglagal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 20:32:20 by maglagal          #+#    #+#             */
-/*   Updated: 2024/03/02 13:28:55 by maglagal         ###   ########.fr       */
+/*   Updated: 2024/03/03 20:19:47 by maglagal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	up_down_enemies_movement(t_player *player, int direction, int i)
 		player->enemies[i].enemy_x++;
 		player->enemies[i].keycode = 2;
 	}
+	else
+		player->enemies[i].keycode = -1;
 }
 
 void	right_left_enemies_movement(t_player *player, int direction, int i)
@@ -82,4 +84,6 @@ void	right_left_enemies_movement(t_player *player, int direction, int i)
 		player->enemies[i].enemy_y++;
 		player->enemies[i].keycode = 13;
 	}
+	else
+		player->enemies[i].keycode = -1;
 }

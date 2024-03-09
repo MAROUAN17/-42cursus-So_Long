@@ -6,7 +6,7 @@
 /*   By: maglagal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 16:52:21 by maglagal          #+#    #+#             */
-/*   Updated: 2024/03/02 18:08:10 by maglagal         ###   ########.fr       */
+/*   Updated: 2024/03/04 15:00:30 by maglagal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 void	put_img_to_window(t_player *player, void *img, int x, int y)
 {
-	mlx_put_image_to_window(player->mlx_ptr, player->mlx_win, img, x, y);
+	if (!img)
+		ft_close(player, 1);
+	else
+		mlx_put_image_to_window(player->mlx_ptr, player->mlx_win, img, x, y);
 }
 
 void	initialize_player_struct(t_player *player)
@@ -22,6 +25,7 @@ void	initialize_player_struct(t_player *player)
 	int	i;
 
 	i = 0;
+	player->mlx_win = NULL;
 	player->background = NULL;
 	player->ground = NULL;
 	player->collectible = NULL;
@@ -73,27 +77,27 @@ void	rendering_images(t_player *player, int x, int y)
 void	get_animation_images(t_player *player)
 {
 	player->animations[0] = mlx_xpm_file_to_image(player->mlx_ptr,
-			"../assets/walk/Walk 1.xpm", &player->img_width,
+			"../textures/walk/Walk 1.xpm", &player->img_width,
 			&player->img_height);
 	player->animations[1] = mlx_xpm_file_to_image(player->mlx_ptr,
-			"../assets/walk/Walk 2.xpm", &player->img_width,
+			"../textures/walk/Walk 2.xpm", &player->img_width,
 			&player->img_height);
 	player->animations[2] = mlx_xpm_file_to_image(player->mlx_ptr,
-			"../assets/walk/Walk 3.xpm", &player->img_width,
+			"../textures/walk/Walk 3.xpm", &player->img_width,
 			&player->img_height);
 	player->animations[3] = mlx_xpm_file_to_image(player->mlx_ptr,
-			"../assets/walk/Walk 4.xpm", &player->img_width,
+			"../textures/walk/Walk 4.xpm", &player->img_width,
 			&player->img_height);
 	player->animations[4] = mlx_xpm_file_to_image(player->mlx_ptr,
-			"../assets/walk/Walk 5.xpm", &player->img_width,
+			"../textures/walk/Walk 5.xpm", &player->img_width,
 			&player->img_height);
 	player->animations[5] = mlx_xpm_file_to_image(player->mlx_ptr,
-			"../assets/walk/Walk 6.xpm", &player->img_width,
+			"../textures/walk/Walk 6.xpm", &player->img_width,
 			&player->img_height);
 	player->animations[6] = mlx_xpm_file_to_image(player->mlx_ptr,
-			"../assets/walk/Walk 7.xpm", &player->img_width,
+			"../textures/walk/Walk 7.xpm", &player->img_width,
 			&player->img_height);
 	player->animations[7] = mlx_xpm_file_to_image(player->mlx_ptr,
-			"../assets/walk/Walk 8.xpm", &player->img_width,
+			"../textures/walk/Walk 8.xpm", &player->img_width,
 			&player->img_height);
 }

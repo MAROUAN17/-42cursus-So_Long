@@ -6,7 +6,7 @@
 /*   By: maglagal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:04 by maglagal          #+#    #+#             */
-/*   Updated: 2024/03/02 18:19:30 by maglagal         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:35:35 by maglagal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_player
 	int				c_enemies;
 	struct s_player	*enemies;
 	void			*animations[8];
-	void			*e_animations[8];
+	void			*e_animations[6];
 }					t_player;
 
 void	ft_putstr_fd(char *s, int fd);
@@ -99,7 +99,7 @@ void	display_moves(t_player *player);
 void	rendering_collectibles(t_player *player);
 void	making_enemies(t_player *player);
 void	initialize_enemies(t_player *player);
-int		count_enemies(char **map, int width, int height);
+int		count_enemies(t_player *player);
 void	initialize_images(t_player *player);
 void	free_map(char **map, int lines);
 void	ft_close(t_player *player, int status);
@@ -112,5 +112,8 @@ void	right_left_enemies_movement(t_player *player, int direction, int i);
 void	put_img_to_window(t_player *player, void *img, int x, int y);
 void	destroy_images(t_player *player);
 void	rendering_images(t_player *player, int x, int y);
+void	initialize_all_animations(t_player *player);
+void	count_rows(char **line, int *p_rows, int *p_lines);
+int		destroy_window(t_player *player);
 
 #endif

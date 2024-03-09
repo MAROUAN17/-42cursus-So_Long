@@ -6,7 +6,7 @@
 /*   By: maglagal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 20:50:20 by maglagal          #+#    #+#             */
-/*   Updated: 2024/03/02 18:19:15 by maglagal         ###   ########.fr       */
+/*   Updated: 2024/03/04 13:10:08 by maglagal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,18 @@ void	check_player_die(t_player *player)
 	}
 	if (i == player->c_enemies - 1)
 		i = 0;
+}
+
+void	count_rows(char **line, int *p_rows, int *p_lines)
+{
+	int	index;
+
+	index = 0;
+	while (*(*line + index) && (*p_lines) == 0)
+	{
+		index++;
+		(*p_rows)++;
+	}
+	(*p_lines)++;
+	free(*line);
 }

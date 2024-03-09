@@ -6,7 +6,7 @@
 /*   By: maglagal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 13:30:34 by maglagal          #+#    #+#             */
-/*   Updated: 2024/03/02 18:53:53 by maglagal         ###   ########.fr       */
+/*   Updated: 2024/03/04 13:47:21 by maglagal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,22 @@ void	update_player_position_and_render(t_player *player)
 			* player->img_width, (player->y + 1) * player->img_height);
 	put_img_to_window(player, player->player_img, player->x
 		* player->img_width, player->y * player->img_height);
+}
+
+void	initialize_all_animations(t_player *player)
+{
+	int	i;
+
+	i = 0;
+	while (i < 8)
+	{
+		player->animations[i] = NULL;
+		i++;
+	}
+	i = 0;
+	while (i < 8)
+	{
+		player->e_animations[i] = NULL;
+		i++;
+	}
 }

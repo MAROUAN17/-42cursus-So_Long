@@ -6,7 +6,7 @@
 /*   By: maglagal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 11:10:30 by maglagal          #+#    #+#             */
-/*   Updated: 2024/03/02 18:51:06 by maglagal         ###   ########.fr       */
+/*   Updated: 2024/03/07 20:27:06 by maglagal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 
 void	move_player_right(t_player *player)
 {
-	int	i;
-
-	i = 0;
-	player->keycode = 2;
 	if (player->map[player->y][player->x + 1] != '1')
 	{
+		player->keycode = 2;
 		if (player->map[player->y][player->x + 1] == 'E')
 		{
 			if (player->c_collectibles == player->total_collectibles)
@@ -40,12 +37,9 @@ void	move_player_right(t_player *player)
 
 void	move_player_left(t_player *player)
 {
-	int	i;
-
-	i = 0;
-	player->keycode = 0;
 	if (player->map[player->y][player->x - 1] != '1')
 	{
+		player->keycode = 0;
 		if (player->map[player->y][player->x - 1] == 'E')
 		{
 			if (player->c_collectibles == player->total_collectibles)
@@ -66,12 +60,9 @@ void	move_player_left(t_player *player)
 
 void	move_player_up(t_player *player)
 {
-	int	i;
-
-	i = 0;
-	player->keycode = 1;
 	if (player->map[player->y - 1][player->x] != '1')
 	{
+		player->keycode = 1;
 		if (player->map[player->y - 1][player->x] == 'E')
 		{
 			if (player->c_collectibles == player->total_collectibles)
@@ -92,12 +83,9 @@ void	move_player_up(t_player *player)
 
 void	move_player_down(t_player *player)
 {
-	int	i;
-
-	i = 0;
-	player->keycode = 13;
 	if (player->map[player->y + 1][player->x] != '1')
 	{
+		player->keycode = 13;
 		if (player->map[player->y + 1][player->x] == 'E')
 		{
 			if (player->c_collectibles == player->total_collectibles)

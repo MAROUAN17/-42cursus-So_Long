@@ -6,13 +6,13 @@
 /*   By: maglagal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 20:34:51 by maglagal          #+#    #+#             */
-/*   Updated: 2024/03/02 18:50:32 by maglagal         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:36:16 by maglagal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sl_header_bonus.h"
 
-int	count_enemies(char **map, int width, int height)
+int	count_enemies(t_player *player)
 {
 	int	x;
 	int	y;
@@ -21,12 +21,12 @@ int	count_enemies(char **map, int width, int height)
 	x = 0;
 	y = 0;
 	counter = 0;
-	while (y < height)
+	while (y < player->map_height)
 	{
 		x = 0;
-		while (x < width)
+		while (x < player->map_width)
 		{
-			if (map[y][x] == 'M')
+			if (player->map[y][x] == 'M')
 				counter++;
 			x++;
 		}
@@ -37,29 +37,28 @@ int	count_enemies(char **map, int width, int height)
 
 void	enemy_get_animation_images(t_player *player)
 {
-	player->e_animations[0]
-		= mlx_xpm_file_to_image(player->mlx_ptr, "../assets/enemy/enemy 1.xpm",
-			&player->img_width, &player->img_height);
+	player->e_animations[0] = mlx_xpm_file_to_image(player->mlx_ptr,
+			"../textures/enemy/enemy 1.xpm", &player->img_width,
+			&player->img_height);
 	player->e_animations[1]
-		= mlx_xpm_file_to_image(player->mlx_ptr, "../assets/enemy/enemy 2.xpm",
+		= mlx_xpm_file_to_image(player->mlx_ptr,
+			"../textures/enemy/enemy 2.xpm",
 			&player->img_width, &player->img_height);
 	player->e_animations[2]
-		= mlx_xpm_file_to_image(player->mlx_ptr, "../assets/enemy/enemy 3.xpm",
+		= mlx_xpm_file_to_image(player->mlx_ptr,
+			"../textures/enemy/enemy 3.xpm",
 			&player->img_width, &player->img_height);
 	player->e_animations[3]
-		= mlx_xpm_file_to_image(player->mlx_ptr, "../assets/enemy/enemy 4.xpm",
+		= mlx_xpm_file_to_image(player->mlx_ptr,
+			"../textures/enemy/enemy 4.xpm",
 			&player->img_width, &player->img_height);
 	player->e_animations[4]
-		= mlx_xpm_file_to_image(player->mlx_ptr, "../assets/enemy/enemy 5.xpm",
+		= mlx_xpm_file_to_image(player->mlx_ptr,
+			"../textures/enemy/enemy 5.xpm",
 			&player->img_width, &player->img_height);
 	player->e_animations[5]
-		= mlx_xpm_file_to_image(player->mlx_ptr, "../assets/enemy/enemy 6.xpm",
-			&player->img_width, &player->img_height);
-	player->e_animations[6]
-		= mlx_xpm_file_to_image(player->mlx_ptr, "../assets/enemy/enemy 7.xpm",
-			&player->img_width, &player->img_height);
-	player->e_animations[7]
-		= mlx_xpm_file_to_image(player->mlx_ptr, "../assets/enemy/enemy 8.xpm",
+		= mlx_xpm_file_to_image(player->mlx_ptr,
+			"../textures/enemy/enemy 6.xpm",
 			&player->img_width, &player->img_height);
 }
 
@@ -84,7 +83,7 @@ void	enemy_animation(t_player *player, int x, int y)
 			* player->img_width, (player->enemy_y - 1) * player->img_height);
 	put_img_to_window(player, player->e_animations[j], x, y);
 	j++;
-	if (j == 8)
+	if (j == 6)
 		j = 0;
 }
 
@@ -133,4 +132,5 @@ void	enemy_following_player(t_player *player)
 		counter = 25;
 		player->e_keycode = -1;
 	}
+	check_player_die(player);
 }

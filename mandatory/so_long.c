@@ -6,7 +6,7 @@
 /*   By: maglagal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 16:44:37 by maglagal          #+#    #+#             */
-/*   Updated: 2024/03/02 18:31:00 by maglagal         ###   ########.fr       */
+/*   Updated: 2024/03/04 19:41:50 by maglagal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,22 @@
 
 int	events_handler(int keycode, t_player *player)
 {
-	if (keycode == 53)
-		ft_close(player, 0);
-	else if (keycode == 2)
-		move_player_right(player);
-	else if (keycode == 0)
-		move_player_left(player);
-	else if (keycode == 1)
-		move_player_up(player);
-	else if (keycode == 13)
-		move_player_down(player);
-	updating_player_render(player);
-	walking_animation(player);
+	if (keycode == 53 || keycode == 2 || keycode == 1
+		|| keycode == 13 || keycode == 0 || keycode == 17)
+	{
+		if (keycode == 53 || keycode == 17)
+			ft_close(player, 0);
+		else if (keycode == 2)
+			move_player_right(player);
+		else if (keycode == 0)
+			move_player_left(player);
+		else if (keycode == 1)
+			move_player_up(player);
+		else if (keycode == 13)
+			move_player_down(player);
+		updating_player_render(player);
+		walking_animation(player);
+	}
 	return (0);
 }
 
@@ -82,9 +86,11 @@ int	main(int ac, char **av)
 		player.mlx_ptr = mlx_init();
 		if (!player.mlx_ptr)
 			exit(1);
+		player.map = NULL;
 		player.map_path = av[1];
 		intialise_player(&player, player.map_path);
 		mlx_hook(player.mlx_win, 2, 1L << 0, events_handler, &player);
+		mlx_hook(player.mlx_win, 17, 1L << 0, destroy_window, &player);
 		mlx_loop(player.mlx_ptr);
 	}
 	else
